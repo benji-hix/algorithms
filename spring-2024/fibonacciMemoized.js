@@ -8,23 +8,46 @@ function fibonacci(n) {
     return fibonacci(n-1) + fibonacci(n-2)
 }
 
-// console.log(fibonacci(50));
+console.log(fibonacci(50));
 
-const cache = {};
 
-function fibonacciMemoized(n) {
-    if (n in cache) {
-        return cache[n];
-    }
-    else {
+//~ below version utilized a global cache
+//~ rather than a localized cache 
+// const cache = {};
+
+// function fibonacciMemoized(n) {
+//     if (n in cache) {
+//         return cache[n];
+//     }
+//     else {
+//         if (n < 2) {
+//             cache[n] = n;
+//             return n;
+//         }
+//         let result = fibonacciMemoized(n - 1) + fibonacciMemoized(n -2);
+//         cache[n] = result;
+//         return result;
+//     }
+// }
+
+//~ below version utilizes IIFE so cache doesn't pollute 
+//~ global namespace 
+const fibonacciMemoized = ( () => {
+    const cache = {};
+    
+    return (n) => {
         if (n < 2) {
-            cache[n] = n;
             return n;
         }
-        let result = fibonacciMemoized(n - 1) + fibonacciMemoized(n -2);
-        cache[n] = result;
-        return result;
-    }
-}
+        if (n in cache) {
+            return cache[n];
+        }
+        else {
+            cache[n] = fibonacciMemoized(n - 1) + fibonacciMemoized(n - 2);
+            return cache[n];
+        }
 
-console.log(fibonacciMemoized(40));
+    };
+})(); //| invoke immediately to create closure for cache variable
+
+console.log(fibonacciMemoized(100));
