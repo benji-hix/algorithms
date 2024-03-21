@@ -25,4 +25,17 @@ function rgb(r, g, b) {
     return rDigit + gDigit + bDigit
 }
  
-console.log(rgb(100, 265, 81));
+// console.log(rgb(100, 265, 81));
+
+//~ refactored using Number.ToString()
+function toHex(int) {
+    if (int < 0) {return '00'};
+    if (int > 255) {return 'FF'};
+    return ('0' + Number(int).toString(16)).slice(-2).toUpperCase();
+}
+
+function rgbRefactored(r, g, b) {
+    return toHex(r) + toHex(g) + toHex(b);
+}
+
+console.log(rgbRefactored(100, 265, 81));
