@@ -31,3 +31,19 @@ function humanReadable(seconds) {
 }
 
 console.log(humanReadable(3600));
+
+//~ version utilizing parseInt() learning
+
+function humanReadableRefactored(seconds) {
+    //| helper function for abstraction
+    function pad (int) {
+        return (int < 10) ? '0' + int : int;
+    }
+
+    const hours = parseInt(seconds/3600);
+    const minutes = parseInt((seconds % 3600)/60);
+    seconds = parseInt((seconds % 3600) % 60);
+    return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`
+}
+
+console.log(humanReadableRefactored(52349));
