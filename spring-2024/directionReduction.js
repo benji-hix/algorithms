@@ -34,3 +34,28 @@ function dirReduc(arr) {
 const testArr1 = ["NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"];
 
 console.log(dirReduc(testArr1));
+
+//~ refactored to use .reduce()
+
+function dirReducRefactored(directions) {
+    const opposites = {
+        'north': 'south',
+        'south' : 'north',
+        'east' : 'west',
+        'west' : 'east'
+    }
+    return reducedDirections = directions.reduce(((directionsList, currentDirection) => {
+        if (!directionsList.length) {
+            directionsList.push(currentDirection);
+        }
+        else if (directionsList[directionsList.length-1].toLowerCase() === opposites[currentDirection.toLowerCase()]) {
+            directionsList.pop();
+        }
+        else {
+            directionsList.push(currentDirection);
+        }
+        return directionsList;
+    }), [])
+}
+
+console.log(dirReducRefactored(testArr1));
