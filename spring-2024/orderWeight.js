@@ -2,32 +2,22 @@
 //* sort the list based on the sum of each entry's digits.
 //* For tied sums, sort based on alphabetical order of the string version of integer.
 
-function addDigits(str) {
-   return str.split('').reduce( (prev, current) => {
-        return parseInt(prev) + parseInt(current);
-   })
-}
-
-function stringSort(strA, strB) {
-    return ([strA, strB].sort()[0] == strA) ? -1 : 1;
-}
-
 function weightSort(a, b) {
-    if (addDigits(a) < addDigits(b)) {
-        return -1
+    function addDigits(str) {
+        return str.split('').reduce((prev, current) => {
+            return parseInt(prev) + parseInt(current);
+        }, 0); //! init value important for === below
     }
-    else if (addDigits(a) > addDigits(b)) {
-        return 1
-    }
-    else {
-        return stringSort(a, b)
-    }
+    const aDigits = addDigits(a);
+    const bDigits = addDigits(b);
+    return aDigits === bDigits ? a.localeCompare(b) : aDigits - bDigits;
 }
 
 function orderWeight(str) {
     return str.split(' ').sort(weightSort).join(' ');
 }
 
-const testStr = "56 65 74 100 99 68 86 180 90"
+const testStr = '56 65 74 100 99 68 86 180 90';
+const testStr2 = '1 200 2 4 4 6 6 7 7 9 18 27 72 81 91';
 
-console.log(orderWeight(testStr));
+console.log(orderWeight(testStr2));
